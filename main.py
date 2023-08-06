@@ -36,9 +36,9 @@ def porn():
     't'       text mode (default)
     '+'       open a disk file for updating (reading and writing)
     'U'       universal newline mode (deprecated)'''
-    with open("main.html", 'w+') as f:
-        f.write(str(bs))
-        f.close()
+    # with open("main.html", 'w+') as f:
+    #     f.write(str(bs))
+    #     f.close()
 
     videos = bs.find_all('div', class_="6u")
 
@@ -51,12 +51,12 @@ def porn():
         video_preview = video[0].find_all('div', class_="hide_noscript")
 
         extractor = URLExtract()
-        count=0
-        for img in video_preview:
-           image = img.get('onmouseover')
-           image = extractor.find_urls(image)
-           count+=1
-           os.system(f"wget https://{image[0]} -O preview_images/{count}.jpg")
+        # count=0
+        # for img in video_preview:
+        #    image = img.get('onmouseover')
+        #    image = extractor.find_urls(image)
+        #    count+=1
+        #    os.system(f"wget https://{image[0]} -O preview_images/{count}.jpg")
 #   
 #        count=0
 #        for _ in range(10):
@@ -102,9 +102,9 @@ with open("test.txt", "a") as myfile:
         time.sleep(10)
         bs = BeautifulSoup(ff_driver.page_source, 'html.parser') 
 
-        with open("main.html", 'w+') as f:
-            f.write(str(bs))
-            f.close()
+        # with open("main.html", 'w+') as f:
+        #     f.write(str(bs))
+        #     f.close()
 
         frame = bs.find_all("div", id="playerWrapper")
 
@@ -114,9 +114,9 @@ with open("test.txt", "a") as myfile:
         ff_driver.get(f"https:{frame}")
         time.sleep(10)
         bs = BeautifulSoup(ff_driver.page_source, 'html.parser') 
-        with open("main.html", 'w+') as f:
-            f.write(str(bs))
-            f.close()
+        # with open("main.html", 'w+') as f:
+        #     f.write(str(bs))
+        #     f.close()
         quality = int(input("enter the quality(360/720/1080):\t"))
         if quality == 360:
             video = bs.find_all("source", title="360p")
@@ -138,7 +138,15 @@ with open("test.txt", "a") as myfile:
                     video = bs.find_all("source", title="1080p Full HD")
         video = video[0].get("src")
         ff_driver.close()
-        os.system(f"wget https:{video}")
+        with open("video_id", "r") as f:
+            filename0 = f.read()
+            f.close()
+        filename = int(filename0) + 1
+
+        with open("video_id", "w") as f:
+            f.write(str(filename))
+            f.close()
+        os.system(f"wget https:{video} -O videos/{filename0}.mp4")
         time.sleep(10)
         print(f" it took {time_1/60000} mins")
         exit()
