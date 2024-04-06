@@ -36,13 +36,13 @@ def porn():
     't'       text mode (default)
     '+'       open a disk file for updating (reading and writing)
     'U'       universal newline mode (deprecated)'''
-    # with open("main.html", 'w+') as f:
-    #     f.write(str(bs))
-    #     f.close()
+    with open("main.html", 'w+') as f:
+        f.write(str(bs))
+        f.close()
 
     videos = bs.find_all('div', class_="6u")
 
-    video = videos[random.randint(0, len(videos)-1)].find_all("a", class_="image featured non-overlay atfib")
+    video = videos[random.randint(0, len(videos)-1)].find_all("a", class_="image featured non-overlay atfib n8hu6s")
 
     video_link = video[0].get('href')
     
@@ -51,12 +51,12 @@ def porn():
         video_preview = video[0].find_all('div', class_="hide_noscript")
 
         extractor = URLExtract()
-        # count=0
-        # for img in video_preview:
-        #    image = img.get('onmouseover')
-        #    image = extractor.find_urls(image)
-        #    count+=1
-        #    os.system(f"wget https://{image[0]} -O preview_images/{count}.jpg")
+        count=0
+        for img in video_preview:
+           image = img.get('onmouseover')
+           image = extractor.find_urls(image)
+           count+=1
+           os.system(f"wget https://{image[0]} -O preview_images/{count}.jpg")
 #   
 #        count=0
 #        for _ in range(10):
@@ -70,7 +70,7 @@ def porn():
         exit
 while True:
     video_link = porn()
-    video_link
+    # video_link
 
     time.sleep(5)
     print(f"https://hqporner.com{video_link}")
@@ -117,25 +117,32 @@ with open("test.txt", "a") as myfile:
         # with open("main.html", 'w+') as f:
         #     f.write(str(bs))
         #     f.close()
-        quality = int(input("enter the quality(360/720/1080):\t"))
-        if quality == 360:
-            video = bs.find_all("source", title="360p")
-            if len(video) == 0:
-                video = bs.find_all("source", title="360p60")
-        
-        elif quality == 720:
-            video = bs.find_all("source", title="720p")
-            if len(video) == 0:
-                video = bs.find_all("source", title="720p60")
+        procede = "n"
+        while procede != "y":
+            quality = int(input("enter the quality(360/720/1080):\t"))
+            if quality == 360:
+                video = bs.find_all("source", title="360p")
                 if len(video) == 0:
-                    video = bs.find_all("source", title="720p HD")
+                    video = bs.find_all("source", title="360p60")
         
-        elif quality == 1080:
-            video = bs.find_all("source", title="1080p")
-            if len(video) == 0:
-                video = bs.find_all("source", title="1080p60")              
+            elif quality == 720:
+                video = bs.find_all("source", title="720p")
                 if len(video) == 0:
-                    video = bs.find_all("source", title="1080p Full HD")
+                    video = bs.find_all("source", title="720p60")
+                    if len(video) == 0:
+                        video = bs.find_all("source", title="720p HD")
+        
+            elif quality == 1080:
+                video = bs.find_all("source", title="1080p")
+                if len(video) == 0:
+                    video = bs.find_all("source", title="1080p60")              
+                    if len(video) == 0:
+                        video = bs.find_all("source", title="1080p Full HD")
+            
+            video_size = os.system(f"video_size=$(curl --head https:{video[0].get('src')})")
+            video_size = os.system("echo $video_size  | awk '/Content-Length/ {print $16}'")
+            print(video_size)
+            procede=input("do you want to procede (y/n):\t")
         video = video[0].get("src")
         ff_driver.close()
         with open("video_id", "r") as f:
