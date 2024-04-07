@@ -20,13 +20,13 @@ with open("seen.txt", "r")  as f:
     seen.extend(iter(f))
     f.close()
 
-def porn():
+def film():
     # choice = categories[random.randint(0, len(categories))-1].replace(" ", "-")
     # # If you want to remove the new lines ('\n'), you can use strip().
     # choice = str(choice).strip()
 
-    # html = requests.get(f"https://hqporner.com/category/{choice}".replace(" ", "+"))
-    html = requests.get("https://hqporner.com/")
+    # html = requests.get(f"https://example.com/category/{choice}".replace(" ", "+"))
+    html = requests.get("https://example.com/")
     bs = BeautifulSoup(html.text, 'html.parser') 
     ''''r'       open for reading (default)
     'w'       open for writing, truncating the file first
@@ -69,11 +69,11 @@ def porn():
     else:
         exit
 while True:
-    video_link = porn()
+    video_link = film()
     # video_link
 
     time.sleep(5)
-    print(f"https://hqporner.com{video_link}")
+    print(f"https://example.com{video_link}")
     with open("seen.txt", 'a') as f:
         '''
         How do you append to a file in Python
@@ -97,7 +97,7 @@ with open("test.txt", "a") as myfile:
         ff_driver = webdriver.Firefox(options=firefox_profile)
         # ff_driver.minimize_window()
 
-        ff_driver.get(f"https://hqporner.com{video_link}")
+        ff_driver.get(f"https://example.com{video_link}")
 
         time.sleep(10)
         bs = BeautifulSoup(ff_driver.page_source, 'html.parser') 
